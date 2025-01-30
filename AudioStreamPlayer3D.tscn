@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7wy8l8aapsax"]
+
+[ext_resource type="AudioStream" uid="uid://b1rj32h3vfp2v" path="res://ambiance.wav" id="1_7sbae"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D"]
+stream = ExtResource("1_7sbae")
+autoplay = true
