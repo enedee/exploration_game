@@ -150,7 +150,7 @@ use_collision = true
 size = Vector3(1, 1, 36.1)
 
 [node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1.58933e-08, 0, 1, 0, 1, 0, -1, 0, 1.58933e-08, 10.5154, 0, 0)
+transform = Transform3D(1.58325e-08, -2.32831e-10, 1, 4.20641e-12, 1, 2.32831e-10, -1, -1.21645e-11, 1.58325e-08, 10.5091, -0.00242902, -12.1387)
 script = ExtResource("2_yy3yr")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Player"]
