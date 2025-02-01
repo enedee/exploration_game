@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://cc8vtlqwv2ilg"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_2fg6w"]
+
+[sub_resource type="Gradient" id="Gradient_ymmbg"]
+offsets = PackedFloat32Array(0, 0.3, 0.573333)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7txnn"]
+gradient = SubResource("Gradient_ymmbg")
+
+[sub_resource type="Curve" id="Curve_ej74g"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.127219, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.456604), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ckq2e"]
+curve = SubResource("Curve_ej74g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ov1gh"]
+emission_shape_scale = Vector3(5, 5, 5)
+emission_shape = 3
+emission_box_extents = Vector3(16, 2, 16)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, -1.5, 0)
+radial_accel_min = -4.0
+radial_accel_max = 4.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_ckq2e")
+color = Color(0.435192, 0.435192, 0.435192, 1)
+color_ramp = SubResource("GradientTexture1D_7txnn")
+
+[sub_resource type="Gradient" id="Gradient_jfu0q"]
+offsets = PackedFloat32Array(0.346405, 0.718954)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_00qba"]
+gradient = SubResource("Gradient_jfu0q")
+width = 4
+height = 4
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ommk"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_00qba")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_cibb8"]
+material = SubResource("StandardMaterial3D_6ommk")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4kf42"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n3w25"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_2fg6w")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, -2.32831e-10, 0, 0, 1, 6.82121e-13, 0, 1.80762e-11, 1, 0, 21.3268, -1.3315e-09)
+amount = 256
+lifetime = 3.5
+visibility_aabb = AABB(-45.9822, -64.2499, -43.52, 92.0688, 67.1818, 90.7852)
+process_material = SubResource("ParticleProcessMaterial_ov1gh")
+draw_pass_1 = SubResource("QuadMesh_cibb8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_4kf42")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_n3w25")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 80.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.279609, 0)
+light_energy = 7.0
+distance_fade_begin = 0.0
+distance_fade_length = 0.0
+spot_range = 11.318
+spot_angle = 31.77
