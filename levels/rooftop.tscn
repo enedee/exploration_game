@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3a0vw84jqgmq"]
+[gd_scene load_steps=21 format=3 uid="uid://c3a0vw84jqgmq"]
 
 [ext_resource type="PackedScene" uid="uid://cc8vtlqwv2ilg" path="res://assets/player.tscn" id="1_ybqd3"]
+[ext_resource type="Script" path="res://scripts/level_transition.gd" id="2_mw453"]
 [ext_resource type="Shader" path="res://shaders/dither.gdshader" id="2_nd4q4"]
 
 [sub_resource type="Environment" id="Environment_lxcog"]
@@ -47,12 +48,28 @@ size = Vector3(8, 5, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_3d0g5"]
 size = Vector3(5, 1, 7)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w4fg6"]
+albedo_color = Color(0.35, 0.28175, 0.2135, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nmv28"]
+material = SubResource("StandardMaterial3D_w4fg6")
+size = Vector3(2, 3, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_prsds"]
+data = PackedVector3Array(-4, 2.5, 5, 4, 2.5, 5, -4, -2.5, 5, 4, 2.5, 5, 4, -2.5, 5, -4, -2.5, 5, 4, 2.5, -5, -4, 2.5, -5, 4, -2.5, -5, -4, 2.5, -5, -4, -2.5, -5, 4, -2.5, -5, 4, 2.5, 5, 4, 2.5, -5, 4, -2.5, 5, 4, 2.5, -5, 4, -2.5, -5, 4, -2.5, 5, -4, 2.5, -5, -4, 2.5, 5, -4, -2.5, -5, -4, 2.5, 5, -4, -2.5, 5, -4, -2.5, -5, 4, 2.5, 5, -4, 2.5, 5, 4, 2.5, -5, -4, 2.5, 5, -4, 2.5, -5, 4, 2.5, -5, -4, -2.5, 5, 4, -2.5, 5, -4, -2.5, -5, 4, -2.5, 5, 4, -2.5, -5, -4, -2.5, -5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1q0vh"]
+size = Vector3(3.5957, 3.15051, 2.19727)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q4h2l"]
 shader = ExtResource("2_nd4q4")
 
 [sub_resource type="QuadMesh" id="QuadMesh_hf0wl"]
 size = Vector2(1162, 864)
 center_offset = Vector3(576, 432, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gvnog"]
+plane = Plane(0, 0.57, 0, 0)
 
 [node name="Rooftop" type="Node3D"]
 
@@ -114,17 +131,42 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_cxaio")
 
 [node name="Player" parent="." instance=ExtResource("1_ybqd3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232158, 0, 0.0187238)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1317, 0, 10.2386)
 
 [node name="Stairs" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0286, 2.5, 18.8743)
 mesh = SubResource("BoxMesh_go66t")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.018, 5, 19.156)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0106001, 2.5, 0.2817)
 mesh = SubResource("BoxMesh_3d0g5")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Stairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.27347, -1, -5.1223)
+mesh = SubResource("BoxMesh_nmv28")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Stairs"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_prsds")
+
+[node name="Area3D" type="Area3D" parent="Stairs"]
+script = ExtResource("2_mw453")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13762, -1.0152, -6.06738)
+shape = SubResource("BoxShape3D_1q0vh")
 
 [node name="Dither_Shader" type="MeshInstance2D" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_q4h2l")
 mesh = SubResource("QuadMesh_hf0wl")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.8999)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -72.7429, 35.3445)
+shape = SubResource("WorldBoundaryShape3D_gvnog")
