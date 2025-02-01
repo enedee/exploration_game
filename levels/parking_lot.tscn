@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cl53oii8virae"]
+[gd_scene load_steps=22 format=3 uid="uid://cl53oii8virae"]
 
 [ext_resource type="Shader" path="res://shaders/dither.gdshader" id="1_4yom5"]
 [ext_resource type="PackedScene" uid="uid://cc8vtlqwv2ilg" path="res://assets/player.tscn" id="2_pn3qq"]
@@ -25,16 +25,11 @@ shader = ExtResource("1_4yom5")
 size = Vector2(1162, 864)
 center_offset = Vector3(576, 432, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jslri"]
-albedo_color = Color(0.202723, 0.202723, 0.202723, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_vdq5l"]
-material = SubResource("StandardMaterial3D_jslri")
+[sub_resource type="PlaneMesh" id="PlaneMesh_kkrvb"]
 size = Vector2(2000, 2000)
-center_offset = Vector3(0, 0, -150)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jen7i"]
-data = PackedVector3Array(1000, 0, 850, -1000, 0, 850, 1000, 0, -1150, -1000, 0, 850, -1000, 0, -1150, 1000, 0, -1150)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_782k2"]
+albedo_color = Color(0.212305, 0.212305, 0.212305, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmcf6"]
 albedo_color = Color(0.47, 0.366365, 0.2397, 1)
@@ -104,16 +99,14 @@ attenuation_model = 3
 volume_db = -5.0
 panning_strength = 0.0
 
-[node name="Road" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_vdq5l")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Road"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Road/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_jen7i")
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 6.82121e-13, 0, 3.18323e-12, 1, 0, 0, 0)
+use_collision = true
+mesh = SubResource("PlaneMesh_kkrvb")
+material = SubResource("StandardMaterial3D_782k2")
 
 [node name="Grass" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, -4.65661e-10, 0, 0, 1, 6.82121e-13, 0, 3.35376e-11, 1, -505, -0.2, -149.728)
+transform = Transform3D(1, -4.65661e-10, 0, 0, 1, 6.82121e-13, 0, 3.35376e-11, 1, -505, -0.2, -209.728)
 mesh = SubResource("BoxMesh_niqkr")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Grass"]

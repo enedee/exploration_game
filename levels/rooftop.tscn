@@ -1,0 +1,130 @@
+[gd_scene load_steps=15 format=3 uid="uid://c3a0vw84jqgmq"]
+
+[ext_resource type="PackedScene" uid="uid://cc8vtlqwv2ilg" path="res://assets/player.tscn" id="1_ybqd3"]
+[ext_resource type="Shader" path="res://shaders/dither.gdshader" id="2_nd4q4"]
+
+[sub_resource type="Environment" id="Environment_lxcog"]
+background_mode = 1
+background_color = Color(0.03987, 0.0234, 0.06, 1)
+background_energy_multiplier = 2.92
+ambient_light_source = 2
+ambient_light_color = Color(0.657544, 0.196943, 0.617247, 1)
+ambient_light_energy = 1.86
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.11
+fog_enabled = true
+fog_light_color = Color(0.281954, 0.0102405, 0.194884, 1)
+fog_density = 0.0671
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xaoam"]
+albedo_color = Color(0.392839, 0.244631, 0.231954, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cnn0s"]
+material = SubResource("StandardMaterial3D_xaoam")
+size = Vector3(50, 150, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1ye3a"]
+data = PackedVector3Array(-25, 75, 25, 25, 75, 25, -25, -75, 25, 25, 75, 25, 25, -75, 25, -25, -75, 25, 25, 75, -25, -25, 75, -25, 25, -75, -25, -25, 75, -25, -25, -75, -25, 25, -75, -25, 25, 75, 25, 25, 75, -25, 25, -75, 25, 25, 75, -25, 25, -75, -25, 25, -75, 25, -25, 75, -25, -25, 75, 25, -25, -75, -25, -25, 75, 25, -25, -75, 25, -25, -75, -25, 25, 75, 25, -25, 75, 25, 25, 75, -25, -25, 75, 25, -25, 75, -25, 25, 75, -25, -25, -75, 25, 25, -75, 25, -25, -75, -25, 25, -75, 25, 25, -75, -25, -25, -75, -25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uax27"]
+albedo_color = Color(0.29, 0.29, 0.29, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qr1jw"]
+material = SubResource("StandardMaterial3D_uax27")
+size = Vector3(48, 1, 0.1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cxaio"]
+data = PackedVector3Array(-24, 0.5, 0.05, 24, 0.5, 0.05, -24, -0.5, 0.05, 24, 0.5, 0.05, 24, -0.5, 0.05, -24, -0.5, 0.05, 24, 0.5, -0.05, -24, 0.5, -0.05, 24, -0.5, -0.05, -24, 0.5, -0.05, -24, -0.5, -0.05, 24, -0.5, -0.05, 24, 0.5, 0.05, 24, 0.5, -0.05, 24, -0.5, 0.05, 24, 0.5, -0.05, 24, -0.5, -0.05, 24, -0.5, 0.05, -24, 0.5, -0.05, -24, 0.5, 0.05, -24, -0.5, -0.05, -24, 0.5, 0.05, -24, -0.5, 0.05, -24, -0.5, -0.05, 24, 0.5, 0.05, -24, 0.5, 0.05, 24, 0.5, -0.05, -24, 0.5, 0.05, -24, 0.5, -0.05, 24, 0.5, -0.05, -24, -0.5, 0.05, 24, -0.5, 0.05, -24, -0.5, -0.05, 24, -0.5, 0.05, 24, -0.5, -0.05, -24, -0.5, -0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4g8l7"]
+albedo_color = Color(0.65, 0.292067, 0.2665, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_go66t"]
+material = SubResource("StandardMaterial3D_4g8l7")
+size = Vector3(8, 5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3d0g5"]
+size = Vector3(5, 1, 7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q4h2l"]
+shader = ExtResource("2_nd4q4")
+
+[sub_resource type="QuadMesh" id="QuadMesh_hf0wl"]
+size = Vector2(1162, 864)
+center_offset = Vector3(576, 432, 0)
+
+[node name="Rooftop" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lxcog")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.463268, 0.188113, 0, 0.376223, 0.926529, -0.500003, 0.802396, -0.325818, 0, 0, 0)
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="Building" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 19.702)
+mesh = SubResource("BoxMesh_cnn0s")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_1ye3a")
+
+[node name="Fence" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 75.475, -24.658)
+mesh = SubResource("BoxMesh_qr1jw")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building/Fence"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/Fence/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_cxaio")
+
+[node name="Fence2" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00964451, 75.4751, 24.549)
+mesh = SubResource("BoxMesh_qr1jw")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building/Fence2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/Fence2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_cxaio")
+
+[node name="Fence3" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(-4.48916e-08, 0, 0.978, 0, 0.978, 0, -1.027, 0, -4.27497e-08, -24.036, 75.475, -0.0559998)
+mesh = SubResource("BoxMesh_qr1jw")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building/Fence3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/Fence3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_cxaio")
+
+[node name="Fence4" type="MeshInstance3D" parent="Building"]
+transform = Transform3D(-4.48916e-08, 0, 0.978, 0, 0.978, 0, -1.027, 0, -4.27497e-08, 24.055, 75.475, -0.0510006)
+mesh = SubResource("BoxMesh_qr1jw")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Building/Fence4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/Fence4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_cxaio")
+
+[node name="Player" parent="." instance=ExtResource("1_ybqd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232158, 0, 0.0187238)
+
+[node name="Stairs" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0286, 2.5, 18.8743)
+mesh = SubResource("BoxMesh_go66t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.018, 5, 19.156)
+mesh = SubResource("BoxMesh_3d0g5")
+
+[node name="Dither_Shader" type="MeshInstance2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_q4h2l")
+mesh = SubResource("QuadMesh_hf0wl")
