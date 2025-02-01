@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cl53oii8virae"]
+[gd_scene load_steps=23 format=3 uid="uid://cl53oii8virae"]
 
 [ext_resource type="Shader" path="res://shaders/dither.gdshader" id="1_4yom5"]
 [ext_resource type="PackedScene" uid="uid://cc8vtlqwv2ilg" path="res://assets/player.tscn" id="2_pn3qq"]
@@ -13,7 +13,9 @@ ambient_light_color = Color(0.657544, 0.196943, 0.617247, 1)
 ambient_light_energy = 1.86
 tonemap_mode = 2
 glow_enabled = true
-glow_intensity = 0.11
+glow_normalized = true
+glow_intensity = 4.0
+glow_bloom = 1.0
 fog_enabled = true
 fog_light_color = Color(0.281954, 0.0102405, 0.194884, 1)
 fog_density = 0.0671
@@ -71,7 +73,11 @@ size = Vector3(2, 0.5, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8epwq"]
 data = PackedVector3Array(-1.5, 0.75, 2.5, 1.5, 0.75, 2.5, -1.5, -0.75, 2.5, 1.5, 0.75, 2.5, 1.5, -0.75, 2.5, -1.5, -0.75, 2.5, 1.5, 0.75, -2.5, -1.5, 0.75, -2.5, 1.5, -0.75, -2.5, -1.5, 0.75, -2.5, -1.5, -0.75, -2.5, 1.5, -0.75, -2.5, 1.5, 0.75, 2.5, 1.5, 0.75, -2.5, 1.5, -0.75, 2.5, 1.5, 0.75, -2.5, 1.5, -0.75, -2.5, 1.5, -0.75, 2.5, -1.5, 0.75, -2.5, -1.5, 0.75, 2.5, -1.5, -0.75, -2.5, -1.5, 0.75, 2.5, -1.5, -0.75, 2.5, -1.5, -0.75, -2.5, 1.5, 0.75, 2.5, -1.5, 0.75, 2.5, 1.5, 0.75, -2.5, -1.5, 0.75, 2.5, -1.5, 0.75, -2.5, 1.5, 0.75, -2.5, -1.5, -0.75, 2.5, 1.5, -0.75, 2.5, -1.5, -0.75, -2.5, 1.5, -0.75, 2.5, 1.5, -0.75, -2.5, -1.5, -0.75, -2.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xduma"]
+albedo_color = Color(0.57, 0.304665, 0.2451, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_4rl7n"]
+material = SubResource("StandardMaterial3D_xduma")
 size = Vector3(200, 900, 200)
 
 [node name="Node3D" type="Node3D"]
